@@ -37,6 +37,8 @@ export default {
         geist: ['Geist', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         mono: ['Geist Mono', 'monospace'],
+        heading: ['Instrument Serif', 'serif'],
+        body: ['Barlow', 'sans-serif'],
       },
       fontSize: {
         'cinema': ['clamp(3rem, 8vw, 9rem)', { lineHeight: '0.95', letterSpacing: '-0.04em' }],

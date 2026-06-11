@@ -4,26 +4,23 @@ import { useNavigate } from 'react-router-dom'
 import { useCinematicStore } from '../../stores/cinematicStore'
 import { useUIStore } from '../../stores/uiStore'
 import CursorSpotlight from '../../components/layout/CursorSpotlight'
-import NeuralField from '../../components/three/NeuralField'
-import Scene01_Idea from './scenes/Scene01_Idea'
-import Scene02_Chaos from './scenes/Scene02_Chaos'
-import Scene03_Death from './scenes/Scene03_Death'
-import Scene04_Activation from './scenes/Scene04_Activation'
-import Scene05_BlueprintEvolution from './scenes/Scene05_BlueprintEvolution'
-import Scene06_Agents from './scenes/Scene06_Agents'
-import Scene07_Consequences from './scenes/Scene07_Consequences'
-import Scene08_Blueprint from './scenes/Scene08_Blueprint'
-import Scene09_CaseStudies from './scenes/Scene09_CaseStudies'
-import Scene10_Builders from './scenes/Scene10_Builders'
-import Scene11_Timeline from './scenes/Scene11_Timeline'
-import Scene12_FinalReveal from './scenes/Scene12_FinalReveal'
+import FadingVideo from '../../components/ui/FadingVideo'
+import Scene01_TheWeight from './scenes/Scene01_TheWeight'
+import Scene02_Fragmentation from './scenes/Scene02_Fragmentation'
+import Scene03_BreakingPoint from './scenes/Scene03_BreakingPoint'
+import Scene04_ParadigmShift from './scenes/Scene04_ParadigmShift'
+import Scene05_MasterBlueprint from './scenes/Scene05_MasterBlueprint'
+import Scene06_AutonomousExecution from './scenes/Scene06_AutonomousExecution'
+import Scene07_NewReality from './scenes/Scene07_NewReality'
+
+const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4'
+const DEEP_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4'
 
 export default function LandingPage() {
   const setCursor = useCinematicStore((s) => s.setCursor)
   const navigate = useNavigate()
   const { isAuthenticated } = useUIStore()
 
-  // Track cursor for parallax
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       setCursor(
@@ -36,108 +33,105 @@ export default function LandingPage() {
   }, [setCursor])
 
   return (
-    <div className="relative" style={{ background: '#050816' }}>
-      {/* Global ambient neural field */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <NeuralField density={600} className="opacity-30" />
-      </div>
-
-      {/* Dot grid — subtle depth layer */}
-      <div
-        className="fixed inset-0 pointer-events-none z-0 dot-grid"
-        style={{ opacity: 0.4 }}
-      />
-
-      {/* Global aurora — top-left & bottom-right orbs */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: '70vw', height: '50vw',
-            top: '-15vw', left: '-15vw',
-            background: 'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 65%)',
-            filter: 'blur(60px)',
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: '60vw', height: '50vw',
-            bottom: '-10vw', right: '-10vw',
-            background: 'radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 65%)',
-            filter: 'blur(60px)',
-          }}
-        />
-      </div>
-
+    <div className="relative" style={{ background: '#000' }}>
       {/* Cursor spotlight */}
       <CursorSpotlight />
 
-      {/* Sticky Navigation */}
+      {/* ── Sticky Navbar ── */}
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5"
+        className="fixed top-4 left-0 right-0 z-50 px-8 lg:px-16"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1 }}
-        style={{
-          background: 'linear-gradient(180deg, rgba(5,8,22,0.9) 0%, transparent 100%)',
-          backdropFilter: 'blur(2px)',
-        }}
       >
-        <div className="font-geist font-black text-white text-lg tracking-tight">
-          CTO<span className="gradient-text-blue">.ai</span>
-        </div>
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="liquid-glass w-12 h-12 rounded-full flex items-center justify-center">
+            <span className="font-heading text-white text-xl leading-none">a</span>
+          </div>
 
-        <div className="hidden md:flex items-center gap-8 text-sm font-inter text-white/40">
-          <span className="hover:text-white/70 cursor-pointer transition-colors">How it works</span>
-          <span className="hover:text-white/70 cursor-pointer transition-colors">Use cases</span>
-          <span
-            className="hover:text-white/70 cursor-pointer transition-colors"
-            onClick={() => navigate('/pricing')}
-          >Pricing</span>
-        </div>
+          {/* Center nav links */}
+          <div className="hidden md:flex items-center">
+            <div className="liquid-glass rounded-full px-1.5 py-1.5 flex items-center gap-1">
+              {['How it works', 'Use cases', 'Pricing'].map((label, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-2 text-sm font-medium text-white/90 font-body cursor-pointer hover:text-white transition-colors rounded-full"
+                  onClick={label === 'Pricing' ? () => navigate('/pricing') : undefined}
+                >
+                  {label}
+                </span>
+              ))}
+              {isAuthenticated ? (
+                <button
+                  onClick={() => navigate('/command-center')}
+                  className="liquid-glass-strong rounded-full px-5 py-2 text-sm font-medium text-white font-body ml-1 whitespace-nowrap cursor-pointer"
+                >
+                  Command Center
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate('/register')}
+                  className="bg-white text-black rounded-full px-5 py-2 text-sm font-semibold font-body ml-1 whitespace-nowrap cursor-pointer hover:bg-white/90 transition-colors"
+                >
+                  Get Started
+                </button>
+              )}
+            </div>
+          </div>
 
-        <div className="flex items-center gap-3">
+          {/* Right spacer (balance) */}
           {isAuthenticated ? (
-            <button
-              onClick={() => navigate('/command-center')}
-              className="btn-primary py-2 px-5 text-sm"
-            >
-              Command Center
-            </button>
+            <div className="w-12 h-12 opacity-0" />
           ) : (
-            <>
-              <button
-                onClick={() => navigate('/login')}
-                className="btn-ghost py-2 px-5 text-sm"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => navigate('/register')}
-                className="btn-primary py-2 px-5 text-sm"
-              >
-                Get Started
-              </button>
-            </>
+            <button
+              onClick={() => navigate('/login')}
+              className="liquid-glass rounded-full px-4 py-2 text-sm font-medium text-white/80 font-body cursor-pointer hover:text-white transition-colors"
+            >
+              Sign In
+            </button>
           )}
         </div>
       </motion.nav>
 
-      {/* All 12 scenes in sequence */}
+      {/* ── Hero video (Scenes 01–04) — 120% scaled, top-focal ── */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <FadingVideo
+          src={HERO_VIDEO}
+          className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top"
+          style={{ width: '120%', height: '120%' }}
+        />
+        {/* Subtle dark vignette so text remains legible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+      </div>
+
+      {/* ── Scenes 01–03 (Hero video bg) ── */}
       <div className="relative z-10">
-        <Scene01_Idea />
-        <Scene02_Chaos />
-        <Scene03_Death />
-        <Scene04_Activation />
-        <Scene05_BlueprintEvolution />
-        <Scene06_Agents />
-        <Scene07_Consequences />
-        <Scene08_Blueprint />
-        <Scene09_CaseStudies />
-        <Scene10_Builders />
-        <Scene11_Timeline />
-        <Scene12_FinalReveal />
+        <Scene01_TheWeight />
+        <Scene02_Fragmentation />
+        <Scene03_BreakingPoint />
+      </div>
+
+      {/* ── Capabilities video (Scenes 04–07) — full-bleed ── */}
+      <div className="relative">
+        {/* The capabilities video sits fixed behind scenes 04–07 */}
+        <div className="sticky top-0 z-0 h-0 overflow-visible pointer-events-none">
+          <div className="absolute inset-x-0 top-0 h-screen">
+            <FadingVideo
+              src={DEEP_VIDEO}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
+          </div>
+        </div>
+
+        {/* Scenes stacked on top of capabilities video */}
+        <div className="relative z-10">
+          <Scene04_ParadigmShift />
+          <Scene05_MasterBlueprint />
+          <Scene06_AutonomousExecution />
+          <Scene07_NewReality />
+        </div>
       </div>
     </div>
   )
