@@ -25,6 +25,7 @@ export default function InitializeSystem() {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [generating, setGenerating] = useState(false)
+  const [error, setError] = useState('')
   const [currentStepLabel, setCurrentStepLabel] = useState('')
   const [steps, setSteps] = useState<WizardStep[]>(GENERATION_STEPS.map(s => ({ ...s, status: 'pending' as const })))
   const [projectId, setProjectId] = useState('')
@@ -57,25 +58,33 @@ export default function InitializeSystem() {
     setGenerationSteps(stepsCopy)
     setIsGenerating(true)
 
-    let completedCount = 0
-    const blueprint = await generateBlueprint(
-      idea,
-      (stepId) => {
-        completedCount++
-        setSteps((prev) => prev.map((s) => s.id === stepId ? { ...s, status: 'complete' as const } : s))
-        updateGenerationStep(stepId, 'complete')
-        const pct = Math.round((completedCount / GENERATION_STEPS.length) * 100)
-        useBlueprintStore.getState().updateProject(id, { readiness: pct })
-      },
-      (msg) => setCurrentStepLabel(msg)
-    )
+    try {
+      let completedCount = 0
+      const blueprint = await generateBlueprint(
+        idea,
+        (stepId) => {
+          completedCount++
+          setSteps((prev) => prev.map((s) => s.id === stepId ? { ...s, status: 'complete' as const } : s))
+          updateGenerationStep(stepId, 'complete')
+          const pct = Math.round((completedCount / GENERATION_STEPS.length) * 100)
+          useBlueprintStore.getState().updateProject(id, { readiness: pct })
+        },
+        (msg) => setCurrentStepLabel(msg)
+      )
 
-    setBlueprint(id, blueprint)
-    setIsGenerating(false)
-    setGenerating(false)
-    // Trigger the signature explosion moment
-    setCompletedProjectName(name || idea.slice(0, 40))
-    setShowExplosion(true)
+      setBlueprint(id, blueprint)
+      setIsGenerating(false)
+      setGenerating(false)
+      // Trigger the signature explosion moment
+      setCompletedProjectName(name || idea.slice(0, 40))
+      setShowExplosion(true)
+    } catch (err: any) {
+      console.error(err)
+      setError(err.message || 'An error occurred during AI generation. Please check your API key.')
+      setIsGenerating(false)
+      setGenerating(false)
+      setWizardStep(1)
+    }
   }
 
   return (
@@ -124,7 +133,7 @@ export default function InitializeSystem() {
                 id="idea-input"
                 value={idea}
                 onChange={(e) => setIdea(e.target.value)}
-                placeholder="e.g. Build a fitness platform with AI coaching and social features for tracking workouts..."
+                placeholder="e.g. Build a SaaS platform with AI forecasting and team collaboration features..."
                 rows={5}
                 className="w-full glass rounded-xl px-5 py-4 font-inter text-white placeholder-white/20 outline-none resize-none text-base leading-relaxed"
                 style={{ border: '1px solid rgba(255,255,255,0.08)' }}
@@ -149,7 +158,7 @@ export default function InitializeSystem() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. FitAI Platform"
+                  placeholder="e.g. Nexus AI Platform"
                   className="w-full glass rounded-xl px-5 py-3 font-inter text-white placeholder-white/20 outline-none"
                   style={{ border: '1px solid rgba(255,255,255,0.08)' }}
                 />
@@ -165,6 +174,11 @@ export default function InitializeSystem() {
                   style={{ border: '1px solid rgba(255,255,255,0.08)' }}
                 />
               </div>
+              {error && (
+                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 font-inter text-sm">
+                  {error}
+                </div>
+              )}
               <div className="flex justify-between">
                 <button onClick={() => setWizardStep(0)} className="btn-ghost text-sm py-2.5 px-5">← Back</button>
                 <button onClick={handleGenerate} className="btn-primary flex items-center gap-2">

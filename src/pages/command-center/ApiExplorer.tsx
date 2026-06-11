@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { ChevronDown, ChevronRight, Lock, Unlock } from 'lucide-react'
 
 const methodColors: Record<string, string> = {
@@ -10,7 +10,11 @@ const methodColors: Record<string, string> = {
 
 export default function ApiExplorer() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const api = project?.blueprint?.apis ?? MOCK_BLUEPRINT.apis
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="API Explorer" />
+  }
+  const api = blueprint.apis
   const [expanded, setExpanded] = useState<string | null>(null)
   const [activeTag, setActiveTag] = useState('All')
 

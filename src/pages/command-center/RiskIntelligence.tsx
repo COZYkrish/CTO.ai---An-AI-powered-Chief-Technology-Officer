@@ -1,13 +1,8 @@
 import { motion } from 'framer-motion'
 import { AlertTriangle, AlertOctagon, Info } from 'lucide-react'
 
-const risks = [
-  { category: 'Technical', name: 'AI Model Latency', severity: 'high', probability: 0.6, impact: 0.8, description: 'ML inference may exceed 200ms SLA under concurrent load.', mitigation: 'Use async job queue + streaming responses. Pre-warm GPU instances.' },
-  { category: 'Technical', name: 'Database Scaling Bottleneck', severity: 'medium', probability: 0.4, impact: 0.7, description: 'PostgreSQL may struggle with time-series metrics at 100k users.', mitigation: 'TimescaleDB partitioning already planned. Add read replicas at 50k users.' },
-  { category: 'Security', name: 'Health Data Exposure', severity: 'critical', probability: 0.2, impact: 1.0, description: 'HIPAA-adjacent health data in fitness metrics requires strict handling.', mitigation: 'AES-256 encryption at rest, column-level security, audit logging.' },
-  { category: 'Business', name: 'Third-Party AI Cost Overrun', severity: 'medium', probability: 0.5, impact: 0.5, description: 'Gemini/OpenAI API costs may spike with viral growth.', mitigation: 'Implement rate limiting, caching of common recommendations, fine-tuned local model at scale.' },
-  { category: 'Scalability', name: 'Notification Bottleneck', severity: 'low', probability: 0.3, impact: 0.4, description: 'Push notification delivery at 100k users without queue.', mitigation: 'RabbitMQ message queue already in architecture. Use batching for non-critical notifications.' },
-]
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
+import { useBlueprintStore } from '../../stores/blueprintStore'
 
 const severityConfig = {
   critical: { color: '#ef4444', Icon: AlertOctagon, label: 'Critical' },
@@ -17,6 +12,12 @@ const severityConfig = {
 }
 
 export default function RiskIntelligence() {
+  const project = useBlueprintStore((s) => s.getActiveProject())
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Risk Intelligence" />
+  }
+  const risks = blueprint.risks || []
   const criticalCount = risks.filter(r => r.severity === 'critical').length
   const highCount = risks.filter(r => r.severity === 'high').length
 

@@ -32,6 +32,26 @@ export interface Blueprint {
   costs: CostEstimate
   roadmap: SprintPlan
   documentation: Documentation
+  engineeringCorps?: EngineeringRole[]
+  risks?: RiskItem[]
+}
+
+export interface EngineeringRole {
+  title: string
+  count: number
+  priority: 'critical' | 'high' | 'medium' | 'low'
+  skills: string[]
+  salary: string
+}
+
+export interface RiskItem {
+  category: string
+  name: string
+  severity: 'critical' | 'high' | 'medium' | 'low'
+  probability: number
+  impact: number
+  description: string
+  mitigation: string
 }
 
 export interface Requirements {

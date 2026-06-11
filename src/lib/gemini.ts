@@ -32,9 +32,9 @@ async function generateGeminiBlueprint(
   onStepComplete: (stepId: string) => void,
   onProgress: (message: string) => void
 ): Promise<Blueprint> {
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`
 
-  const systemPrompt = `You are an expert CTO and software architect. Given a startup idea, generate a complete engineering blueprint as structured JSON. Be detailed, realistic, and production-grade.
+  const systemPrompt = `You are an expert CTO and software architect. Given a startup idea, generate a complete engineering blueprint as structured JSON. Be detailed but realistic. IMPORTANT: Keep all string values and descriptions extremely concise (1-2 sentences max) to ensure the entire JSON payload fits within token limits and doesn't get truncated.
 
 Idea: "${idea}"
 
@@ -48,7 +48,13 @@ Return a JSON object matching this structure exactly:
   "infrastructure": { "provider": "aws", "deploymentStrategy": "", "monitoring": [], "scaling": {}, "services": [] },
   "costs": { "monthly": { "total": 0, "breakdown": [] }, "scenarios": { "users100": { "total": 0, "breakdown": [] }, "users1k": { "total": 0, "breakdown": [] }, "users10k": { "total": 0, "breakdown": [] }, "users100k": { "total": 0, "breakdown": [] } } },
   "roadmap": { "totalSprints": 6, "sprintDuration": 2, "milestones": [], "sprints": [] },
-  "documentation": { "prd": "", "srs": "", "readme": "", "apiDocs": "", "deploymentGuide": "" }
+  "documentation": { "prd": "", "srs": "", "readme": "", "apiDocs": "", "deploymentGuide": "" },
+  "engineeringCorps": [
+    { "title": "Full-Stack Engineer", "count": 2, "priority": "critical", "skills": ["React", "Node.js"], "salary": "$110k-$140k" }
+  ],
+  "risks": [
+    { "category": "Technical", "name": "Model Latency", "severity": "high", "probability": 0.6, "impact": 0.8, "description": "", "mitigation": "" }
+  ]
 }`
 
   onProgress('Connecting to Gemini AI...')
@@ -92,10 +98,16 @@ Return a JSON object matching this structure exactly:
       await new Promise((r) => setTimeout(r, 300))
     }
 
-    const blueprint = JSON.parse(jsonStr) as Blueprint
+    let blueprint: Blueprint
+    try {
+      blueprint = JSON.parse(jsonStr) as Blueprint
+    } catch (parseError: any) {
+      console.error('Failed to parse Gemini JSON:', parseError, '\\nTruncated JSON:', jsonStr)
+      throw new Error('The AI generated an incomplete or invalid blueprint. Please try again with a slightly different prompt.')
+    }
     return blueprint
   } catch (err) {
-    console.error('Gemini API error, falling back to mock:', err)
-    return generateMockBlueprint(onStepComplete, onProgress)
+    console.error('Gemini API error:', err)
+    throw err
   }
 }

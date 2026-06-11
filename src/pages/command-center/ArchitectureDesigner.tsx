@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import ReactFlow, {
   Background, Controls, MiniMap,
   MarkerType,
@@ -17,7 +17,11 @@ const typeColors: Record<string, string> = {
 
 export default function ArchitectureDesigner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const arch = project?.blueprint?.architecture ?? MOCK_BLUEPRINT.architecture
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Architecture Designer" />
+  }
+  const arch = blueprint.architecture
 
   const nodes: Node[] = arch.components.map((c) => ({
     id: c.id,

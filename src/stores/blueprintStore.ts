@@ -68,7 +68,7 @@ export const useBlueprintStore = create<BlueprintStore>()(
       },
     }),
     {
-      name: 'ctoai-projects',
+      name: 'ctoai-projects-v2',
       partialize: (state) => ({
         projects: state.projects,
         activeProjectId: state.activeProjectId,

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from 'recharts'
 
 const tiers = [
@@ -15,7 +15,11 @@ const COLORS = ['#3B82F6', '#06B6D4', '#8B5CF6', '#10B981']
 
 export default function CostSimulator() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const costs = project?.blueprint?.costs ?? MOCK_BLUEPRINT.costs
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Cost Simulator" />
+  }
+  const costs = blueprint.costs
   const [activeTier, setActiveTier] = useState<typeof tiers[number]['key']>('users10k')
 
   const tierData = costs.scenarios[activeTier]

@@ -1,13 +1,17 @@
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { Calendar, Flag } from 'lucide-react'
 
 const taskTypeColor: Record<string, string> = { feature: '#3B82F6', infra: '#10B981', bug: '#ef4444', docs: '#8B5CF6', testing: '#F59E0B' }
 
 export default function SprintPlanner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const roadmap = project?.blueprint?.roadmap ?? MOCK_BLUEPRINT.roadmap
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Sprint Planner" />
+  }
+  const roadmap = blueprint.roadmap
 
   return (
     <div className="p-8 space-y-8">

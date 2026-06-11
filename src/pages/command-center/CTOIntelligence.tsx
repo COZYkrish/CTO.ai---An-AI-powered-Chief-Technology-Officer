@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { Send, Cpu, User } from 'lucide-react'
 
 interface Message {
@@ -14,7 +14,7 @@ interface Message {
 const MOCK_RESPONSES: Record<string, string> = {
   default: "Based on your project's architecture, I recommend focusing on the API gateway configuration first. The microservices pattern you've chosen will scale well, but you'll want to ensure your rate limiting is in place before going to production.",
   architecture: "Your system uses a Microservices with API Gateway pattern. The key benefit is independent scaling — your AI coaching service can scale horizontally during peak usage while the auth service remains lean. I'd suggest starting with 2 EC2 instances behind the load balancer and auto-scaling from there.",
-  database: "Your database schema looks solid. The TimescaleDB choice for fitness metrics is excellent — time-series queries will be much faster than standard PostgreSQL. Make sure to set up hypertable partitioning on the workout_sessions table from day one.",
+  database: "Your database schema looks solid. The TimescaleDB choice for business metrics is excellent — time-series queries will be much faster than standard PostgreSQL. Make sure to set up hypertable partitioning on the events table from day one.",
   security: "Your security score is 87/100. The main gap is threat modeling — I recommend a 2-hour architecture review session before launch. The OWASP A04 (Insecure Design) check is the one that needs attention. Want me to outline what that session should cover?",
   cost: "At your current architecture, you're looking at $1,215/month at 10k users. The biggest cost lever is the AI inference workers — switching to spot instances for non-real-time requests could save ~35%. I can generate a cost optimization plan if you'd like.",
 }
@@ -30,7 +30,8 @@ function getResponse(question: string): string {
 
 export default function CTOIntelligence() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const projectName = project?.name ?? 'FitAI Platform'
+  const blueprint = project?.blueprint
+  const projectName = project?.name ?? 'Nexus AI Platform'
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
@@ -61,6 +62,10 @@ export default function CTOIntelligence() {
   }
 
   const suggestions = ['How should I scale the architecture?', 'What are the biggest security risks?', 'How much will this cost at 50k users?', 'Explain the database schema choices.']
+
+  if (!blueprint) {
+    return <EmptyBlueprintState title="CTO Intelligence" />
+  }
 
   return (
     <div className="flex flex-col h-full" style={{ maxHeight: 'calc(100vh - 73px)' }}>

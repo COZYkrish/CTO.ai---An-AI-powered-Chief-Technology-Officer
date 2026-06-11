@@ -1,17 +1,18 @@
 import { motion } from 'framer-motion'
 import { Users } from 'lucide-react'
 
-const roles = [
-  { title: 'Full-Stack Engineer', count: 2, priority: 'critical', skills: ['React', 'Node.js', 'PostgreSQL', 'REST APIs'], salary: '$110k–$140k', color: '#3B82F6' },
-  { title: 'AI/ML Engineer', count: 1, priority: 'critical', skills: ['Python', 'TensorFlow', 'FastAPI', 'MLOps'], salary: '$130k–$160k', color: '#8B5CF6' },
-  { title: 'DevOps Engineer', count: 1, priority: 'high', skills: ['AWS', 'Docker', 'Terraform', 'CI/CD'], salary: '$100k–$130k', color: '#10B981' },
-  { title: 'Product Designer', count: 1, priority: 'high', skills: ['Figma', 'UX Research', 'Design Systems'], salary: '$90k–$120k', color: '#06B6D4' },
-  { title: 'QA Engineer', count: 1, priority: 'medium', skills: ['Cypress', 'Jest', 'API testing', 'Performance'], salary: '$75k–$100k', color: '#F59E0B' },
-]
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
+import { useBlueprintStore } from '../../stores/blueprintStore'
 
-const priorityColor: Record<string, string> = { critical: '#ef4444', high: '#f59e0b', medium: '#3B82F6' }
+const priorityColor: Record<string, string> = { critical: '#ef4444', high: '#f59e0b', medium: '#3B82F6', low: '#6b7280' }
 
 export default function EngineeringCorps() {
+  const project = useBlueprintStore((s) => s.getActiveProject())
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Engineering Corps" />
+  }
+  const roles = blueprint.engineeringCorps || []
   const totalTeam = roles.reduce((a, r) => a + r.count, 0)
 
   return (
@@ -25,11 +26,11 @@ export default function EngineeringCorps() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {roles.map((role, i) => (
           <motion.div key={role.title} className="glass-panel rounded-2xl p-6"
-            style={{ border: `1px solid ${role.color}15` }}
+            style={{ border: `1px solid #3B82F615` }}
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
             <div className="flex items-start justify-between mb-4">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${role.color}15` }}>
-                <Users className="w-5 h-5" style={{ color: role.color }} />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `#3B82F615` }}>
+                <Users className="w-5 h-5" style={{ color: '#3B82F6' }} />
               </div>
               <div className="text-right">
                 <div className="font-geist font-black text-white text-2xl">{role.count}</div>
@@ -45,7 +46,7 @@ export default function EngineeringCorps() {
             </div>
             <div className="flex flex-wrap gap-1.5">
               {role.skills.map((skill) => (
-                <span key={skill} className="text-xs px-2 py-0.5 rounded font-mono" style={{ background: `${role.color}10`, color: role.color, opacity: 0.8 }}>
+                <span key={skill} className="text-xs px-2 py-0.5 rounded font-mono" style={{ background: `#3B82F610`, color: '#3B82F6', opacity: 0.8 }}>
                   {skill}
                 </span>
               ))}

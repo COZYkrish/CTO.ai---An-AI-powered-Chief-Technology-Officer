@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { Download, BookOpen, FileText, Code, Rocket } from 'lucide-react'
 
 const docTabs = [
@@ -16,7 +16,11 @@ type DocKey = typeof docTabs[number]['id']
 
 export default function DocumentationHub() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const docs = project?.blueprint?.documentation ?? MOCK_BLUEPRINT.documentation
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Documentation Hub" />
+  }
+  const docs = blueprint.documentation
   const [activeDoc, setActiveDoc] = useState<DocKey>('prd')
 
   const activeTab = docTabs.find((t) => t.id === activeDoc)!

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { CheckCircle2, Circle, ChevronDown, ChevronRight } from 'lucide-react'
 
 const priorityColor: Record<string, string> = {
@@ -10,7 +10,11 @@ const priorityColor: Record<string, string> = {
 
 export default function RequirementsStudio() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const req = project?.blueprint?.requirements ?? MOCK_BLUEPRINT.requirements
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Requirements Studio" />
+  }
+  const req = blueprint.requirements
   const [activeTab, setActiveTab] = useState<'functional' | 'nonfunctional' | 'stories'>('functional')
   const [expandedStory, setExpandedStory] = useState<string | null>(null)
 

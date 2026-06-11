@@ -5,19 +5,7 @@ import { useUIStore } from '../../stores/uiStore'
 import { Plus, TrendingUp, Cpu, Shield, GitBranch, ArrowRight, Zap } from 'lucide-react'
 import { AreaChart, Area, ResponsiveContainer, Tooltip } from 'recharts'
 
-const activityData = [
-  { time: 'Mon', blueprints: 1 }, { time: 'Tue', blueprints: 3 }, { time: 'Wed', blueprints: 2 },
-  { time: 'Thu', blueprints: 5 }, { time: 'Fri', blueprints: 4 }, { time: 'Sat', blueprints: 7 },
-  { time: 'Sun', blueprints: 6 },
-]
 
-const recentActivity = [
-  { action: 'Architecture generated', project: 'FitAI Platform', time: '2 min ago', color: '#3B82F6' },
-  { action: 'Security analysis complete', project: 'FitAI Platform', time: '5 min ago', color: '#F59E0B' },
-  { action: 'Database schema created', project: 'FitAI Platform', time: '8 min ago', color: '#8B5CF6' },
-  { action: 'Sprint roadmap built', project: 'FitAI Platform', time: '12 min ago', color: '#10B981' },
-  { action: 'Blueprint initialized', project: 'FitAI Platform', time: '15 min ago', color: '#06B6D4' },
-]
 
 const quickActions = [
   { label: 'Initialize System', icon: Plus, path: '/command-center/initialize', color: '#3B82F6' },
@@ -32,11 +20,22 @@ export default function IntelligenceHub() {
   const { projects } = useBlueprintStore()
 
   const stats = [
-    { label: 'Active Systems', value: projects.length || 1, change: '+1 this week', icon: GitBranch, color: '#3B82F6' },
-    { label: 'Blueprints Generated', value: projects.filter(p => p.status === 'complete').length || 1, change: 'All complete', icon: Zap, color: '#06B6D4' },
-    { label: 'AI Queries', value: 47, change: '+12 today', icon: Cpu, color: '#8B5CF6' },
-    { label: 'Security Score', value: '87%', change: 'Above average', icon: Shield, color: '#10B981' },
+    { label: 'Active Systems', value: projects.length, change: projects.length > 0 ? '+1 this week' : '0 this week', icon: GitBranch, color: '#3B82F6' },
+    { label: 'Blueprints Generated', value: projects.filter(p => p.status === 'complete').length, change: projects.length > 0 ? 'All complete' : '0 complete', icon: Zap, color: '#06B6D4' },
+    { label: 'AI Queries', value: projects.length * 5, change: '+0 today', icon: Cpu, color: '#8B5CF6' },
+    { label: 'Security Score', value: projects.length > 0 && projects[0].blueprint ? `${projects[0].blueprint.security.score}%` : 'N/A', change: projects.length > 0 ? 'Current active' : '-', icon: Shield, color: '#10B981' },
   ]
+
+  const activityData = projects.length > 0 
+    ? [ { time: 'Mon', blueprints: 0 }, { time: 'Tue', blueprints: 0 }, { time: 'Wed', blueprints: 0 }, { time: 'Thu', blueprints: 0 }, { time: 'Fri', blueprints: 0 }, { time: 'Sat', blueprints: projects.length }, { time: 'Sun', blueprints: 0 } ]
+    : [ { time: 'Mon', blueprints: 0 }, { time: 'Tue', blueprints: 0 }, { time: 'Wed', blueprints: 0 }, { time: 'Thu', blueprints: 0 }, { time: 'Fri', blueprints: 0 }, { time: 'Sat', blueprints: 0 }, { time: 'Sun', blueprints: 0 } ]
+
+  const recentActivity = projects.slice(0, 5).map(p => ({
+    action: p.status === 'complete' ? 'Blueprint generated' : 'Blueprint initialized',
+    project: p.name,
+    time: new Date(p.updatedAt).toLocaleDateString(),
+    color: '#3B82F6'
+  }))
 
   return (
     <div className="p-8 space-y-8">
@@ -149,16 +148,20 @@ export default function IntelligenceHub() {
           </button>
         </div>
         <div className="space-y-3">
-          {recentActivity.map((a, i) => (
-            <div key={i} className="flex items-center gap-4 py-2">
-              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: a.color }} />
-              <div className="flex-1 min-w-0">
-                <span className="font-inter text-white/60 text-sm">{a.action}</span>
-                <span className="text-white/30 text-sm font-inter"> · {a.project}</span>
+          {recentActivity.length > 0 ? (
+            recentActivity.map((a, i) => (
+              <div key={i} className="flex items-center gap-4 py-2">
+                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: a.color }} />
+                <div className="flex-1 min-w-0">
+                  <span className="font-inter text-white/60 text-sm">{a.action}</span>
+                  <span className="text-white/30 text-sm font-inter"> · {a.project}</span>
+                </div>
+                <span className="text-white/20 font-mono text-xs flex-shrink-0">{a.time}</span>
               </div>
-              <span className="text-white/20 font-mono text-xs flex-shrink-0">{a.time}</span>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="text-center py-6 text-white/30 text-sm font-inter">No recent activity</div>
+          )}
         </div>
       </motion.div>
 

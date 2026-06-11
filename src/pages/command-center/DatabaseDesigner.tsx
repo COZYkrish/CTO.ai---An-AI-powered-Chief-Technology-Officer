@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 
 const columnTypeColor: Record<string, string> = {
@@ -11,7 +11,11 @@ const columnTypeColor: Record<string, string> = {
 
 export default function DatabaseDesigner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const db = project?.blueprint?.database ?? MOCK_BLUEPRINT.database
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Database Designer" />
+  }
+  const db = blueprint.database
   const [expanded, setExpanded] = useState<string>(db.tables[0]?.name ?? '')
 
   return (

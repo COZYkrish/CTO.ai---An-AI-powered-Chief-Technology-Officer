@@ -11,7 +11,7 @@ const projects = [
     color: "from-blue-500/20 to-purple-500/20"
   },
   {
-    title: "AI FITNESS PLATFORM",
+    title: "AI E-COMMERCE PLATFORM",
     tags: ["Microservices", "JWT", "Gemini", "Redis"],
     color: "from-emerald-500/20 to-cyan-500/20"
   },

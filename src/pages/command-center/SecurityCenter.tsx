@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { Shield, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react'
 
 const severityColor: Record<string, string> = { critical: '#ef4444', high: '#f59e0b', medium: '#3B82F6', low: '#6b7280' }
@@ -9,7 +9,11 @@ const statusColor = { pass: '#10B981', fail: '#ef4444', warning: '#f59e0b' }
 
 export default function SecurityCenter() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const sec = project?.blueprint?.security ?? MOCK_BLUEPRINT.security
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Security Center" />
+  }
+  const sec = blueprint.security
 
   const scoreColor = sec.score >= 80 ? '#10B981' : sec.score >= 60 ? '#f59e0b' : '#ef4444'
 

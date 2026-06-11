@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
 import { useNavigate } from 'react-router-dom'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { GitBranch, Database, Shield, Server, FileText, Calendar, ArrowRight, Zap } from 'lucide-react'
 
 const artifacts = [
@@ -16,7 +16,11 @@ const artifacts = [
 export default function SystemOverview() {
   const navigate = useNavigate()
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const blueprint = project?.blueprint ?? MOCK_BLUEPRINT
+  const blueprint = project?.blueprint
+  
+  if (!blueprint) {
+    return <EmptyBlueprintState title="System Overview" />
+  }
   const arch = blueprint.architecture
 
   const techStack = [
@@ -30,7 +34,7 @@ export default function SystemOverview() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <p className="text-xs font-mono text-cyan-400/60 uppercase tracking-widest mb-2">System Overview</p>
         <h1 className="font-geist font-black text-white mb-1" style={{ fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', letterSpacing: '-0.03em' }}>
-          {project?.name ?? 'FitAI Platform'}
+          {project?.name ?? 'Nexus AI Platform'}
         </h1>
         <p className="font-inter text-white/40 text-sm">{arch.pattern} · {arch.scalingStrategy?.split('.')[0]}</p>
       </motion.div>

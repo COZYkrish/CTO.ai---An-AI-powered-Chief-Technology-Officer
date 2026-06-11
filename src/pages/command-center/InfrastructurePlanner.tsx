@@ -1,11 +1,15 @@
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
-import { MOCK_BLUEPRINT } from '../../lib/mock/mockData'
+import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { Server, CheckCircle2 } from 'lucide-react'
 
 export default function InfrastructurePlanner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
-  const infra = project?.blueprint?.infrastructure ?? MOCK_BLUEPRINT.infrastructure
+  const blueprint = project?.blueprint
+  if (!blueprint) {
+    return <EmptyBlueprintState title="Infrastructure Planner" />
+  }
+  const infra = blueprint.infrastructure
 
   return (
     <div className="p-8 space-y-8">
