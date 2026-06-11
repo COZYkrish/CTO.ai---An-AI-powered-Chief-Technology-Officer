@@ -8,7 +8,7 @@ export default function Section12_FinalCTA() {
     <section className="relative min-h-screen w-full bg-transparent flex flex-col items-center justify-center overflow-hidden px-8">
       <div className="max-w-5xl flex flex-col items-center">
         <h2 className="text-massive-2 text-white mb-6">LET'S BUILD</h2>
-        <h2 className="text-massive-2 gradient-text-blue mb-12">SOMETHING REAL.</h2>
+        <h2 className="text-massive-2 gradient-text-red mb-12">SOMETHING REAL.</h2>
         
         <p className="text-editorial text-white/60 mb-16">
           The AI Chief Technology Officer.

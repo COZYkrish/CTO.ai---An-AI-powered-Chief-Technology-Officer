@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -8,7 +8,7 @@ export default function Section01_Manifesto() {
   const containerRef = useRef<HTMLDivElement>(null)
   const linesRef = useRef<(HTMLDivElement | null)[]>([])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       // Pin and line-by-line reveal
       const tl = gsap.timeline({
@@ -44,7 +44,7 @@ export default function Section01_Manifesto() {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-8 py-32">
+    <section id="manifesto" ref={containerRef} className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-8 py-32">
       
       {/* Chapter Indicator */}
       <div className="absolute top-32 left-8 md:left-16 text-white/40 font-mono text-sm tracking-[0.2em] flex items-center gap-4 hidden md:flex">

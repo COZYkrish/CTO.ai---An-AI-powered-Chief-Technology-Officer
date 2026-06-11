@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -16,7 +16,7 @@ import MagneticElement from '@/components/cinematic/MagneticElement'
 export default function Section09_RealityCards() {
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.utils.toArray('.reality-card').forEach((card: any, i) => {
         gsap.fromTo(card,

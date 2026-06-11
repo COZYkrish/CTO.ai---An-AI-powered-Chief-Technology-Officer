@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -16,7 +16,7 @@ export default function Section02_Reality() {
   const containerRef = useRef<HTMLDivElement>(null)
   const itemsRef = useRef<(HTMLDivElement | null)[]>([])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -82,7 +82,7 @@ export default function Section02_Reality() {
               <div className="desc text-editorial text-white/60 max-w-xl text-center md:text-left">
                 {item.desc}
               </div>
-              <div className="code font-mono text-blue-400/80 bg-blue-900/10 border border-blue-500/20 px-6 py-3 rounded flex-shrink-0 text-sm tracking-widest hidden md:block">
+              <div className="code font-mono text-red-400/80 bg-red-900/10 border border-red-500/20 px-6 py-3 rounded flex-shrink-0 text-sm tracking-widest hidden md:block">
                 {item.code}
               </div>
             </div>

@@ -70,7 +70,21 @@ Return a JSON object matching this structure exactly:
     const data = await response.json()
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text
 
-    if (!text) throw new Error('No response from Gemini')
+    if (!text) {
+      console.error('Gemini API Error Response:', data)
+      throw new Error('No response from Gemini')
+    }
+
+    // Safely extract the JSON object, ignoring any conversational filler
+    const firstBrace = text.indexOf('{')
+    const lastBrace = text.lastIndexOf('}')
+    
+    if (firstBrace === -1 || lastBrace === -1) {
+      console.error('Gemini text response did not contain JSON:', text)
+      throw new Error('No JSON object found in Gemini response')
+    }
+    
+    const jsonStr = text.substring(firstBrace, lastBrace + 1)
 
     // Simulate step completion during Gemini processing
     for (const step of GENERATION_STEPS) {
@@ -78,7 +92,7 @@ Return a JSON object matching this structure exactly:
       await new Promise((r) => setTimeout(r, 300))
     }
 
-    const blueprint = JSON.parse(text) as Blueprint
+    const blueprint = JSON.parse(jsonStr) as Blueprint
     return blueprint
   } catch (err) {
     console.error('Gemini API error, falling back to mock:', err)

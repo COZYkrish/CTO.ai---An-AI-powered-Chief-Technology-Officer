@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -9,7 +9,7 @@ export default function Section05_MeetCTO() {
   const titleRef = useRef<HTMLDivElement>(null)
   const descRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -52,7 +52,7 @@ export default function Section05_MeetCTO() {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen w-full bg-transparent flex flex-col items-center justify-center overflow-hidden px-8 py-32">
+    <section id="platform" ref={containerRef} className="relative min-h-screen w-full bg-transparent flex flex-col items-center justify-center overflow-hidden px-8 py-32">
       
       {/* Abstract Background Grid */}
       <div className="absolute inset-0 z-0 dot-grid opacity-20 mask-radial-fade"></div>
@@ -63,8 +63,8 @@ export default function Section05_MeetCTO() {
 
       <div className="features-grid grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-24 max-w-7xl w-full z-10">
         <div className="flex flex-col items-center text-center p-8 glass-panel rounded-2xl opacity-0 translate-y-10">
-          <div className="w-16 h-16 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center mb-6">
-            <svg className="w-8 h-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+          <div className="w-16 h-16 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center mb-6">
+            <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
           </div>
           <h3 className="text-2xl font-bebas text-white mb-4 tracking-widest">INSTANT INFRASTRUCTURE</h3>
           <p className="text-editorial text-white/60 text-sm">Deploy AWS, GCP, or Azure configurations in seconds. Terraformed, secure, and production-ready from day zero.</p>

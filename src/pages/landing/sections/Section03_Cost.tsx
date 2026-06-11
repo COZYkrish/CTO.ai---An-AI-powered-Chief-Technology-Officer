@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -9,7 +9,7 @@ export default function Section03_Cost() {
   const textRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -66,7 +66,7 @@ export default function Section03_Cost() {
       <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 mt-24 opacity-0 z-10 max-w-7xl w-full">
         {metrics.map((m, i) => (
           <div key={i} className="flex flex-col items-center text-center">
-            <div className="text-5xl md:text-6xl font-bebas text-blue-500 mb-4">{m.value}</div>
+            <div className="text-5xl md:text-6xl font-bebas text-red-500 mb-4">{m.value}</div>
             <div className="text-xs md:text-sm font-mono text-white/60 tracking-widest">{m.label}</div>
           </div>
         ))}
