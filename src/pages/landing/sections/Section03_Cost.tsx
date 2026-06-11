@@ -15,7 +15,7 @@ export default function Section03_Cost() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=150%',
+          end: '+=100%',
           pin: true,
           scrub: 1,
         }
@@ -48,7 +48,7 @@ export default function Section03_Cost() {
   ]
 
   return (
-    <section ref={containerRef} className="relative min-h-screen w-full bg-deep flex flex-col items-center justify-center overflow-hidden px-8 py-32">
+    <section ref={containerRef} className="relative min-h-screen w-full bg-transparent flex flex-col items-center justify-center overflow-hidden px-8 py-32">
       
       {/* Chapter Indicator */}
       <div className="absolute top-32 right-8 md:right-16 text-white/40 font-mono text-sm tracking-[0.2em] flex items-center gap-4 z-20 hidden md:flex">

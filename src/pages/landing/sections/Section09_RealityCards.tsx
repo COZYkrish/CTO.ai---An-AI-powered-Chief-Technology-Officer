@@ -40,7 +40,7 @@ export default function Section09_RealityCards() {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative w-full py-48 bg-deep flex flex-col items-center justify-center gap-32 overflow-hidden px-8">
+    <section ref={containerRef} className="relative w-full py-48 bg-transparent flex flex-col items-center justify-center gap-32 overflow-hidden px-8">
       {cards.map((card, i) => (
         <MagneticElement key={i} intensity={0.15}>
           <div 

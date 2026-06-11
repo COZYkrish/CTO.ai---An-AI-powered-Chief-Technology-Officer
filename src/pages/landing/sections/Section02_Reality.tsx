@@ -22,7 +22,7 @@ export default function Section02_Reality() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=400%',
+          end: '+=200%',
           pin: true,
           scrub: 1,
         }
@@ -60,7 +60,7 @@ export default function Section02_Reality() {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative h-screen w-full bg-void flex items-center justify-center overflow-hidden">
+    <section ref={containerRef} className="relative h-screen w-full bg-transparent flex items-center justify-center overflow-hidden">
       
       {/* Chapter Indicator */}
       <div className="absolute top-32 left-8 md:left-16 text-white/40 font-mono text-sm tracking-[0.2em] flex items-center gap-4 z-20">

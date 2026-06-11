@@ -9,13 +9,8 @@ import FadingVideo from '../../components/ui/FadingVideo'
 import Section01_Manifesto from './sections/Section01_Manifesto'
 import Section02_Reality from './sections/Section02_Reality'
 import Section03_Cost from './sections/Section03_Cost'
-import Section04_WhyCTOsExist from './sections/Section04_WhyCTOsExist'
 import Section05_MeetCTO from './sections/Section05_MeetCTO'
-import Section06_Transformation from './sections/Section06_Transformation'
-import Section08_Philosophy from './sections/Section08_Philosophy'
 import Section09_RealityCards from './sections/Section09_RealityCards'
-import Section10_Execution from './sections/Section10_Execution'
-import Section11_FinalManifesto from './sections/Section11_FinalManifesto'
 import Section12_FinalCTA from './sections/Section12_FinalCTA'
 
 // Cinematic Elements
@@ -44,8 +39,7 @@ export default function LandingPage() {
 
   const navLinks = [
     { label: 'Manifesto', id: 'manifesto' },
-    { label: 'Blueprints', id: 'blueprints' },
-    { label: 'Philosophy', id: 'philosophy' }
+    { label: 'Blueprints', id: 'blueprints' }
   ]
 
   const scrollTo = (id: string) => {
@@ -54,7 +48,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="relative bg-black" style={{ background: '#000' }}>
+    <div className="relative bg-transparent text-white w-full">
       <FilmGrain />
       <AmbientDust />
       <CursorSpotlight />
@@ -102,12 +96,15 @@ export default function LandingPage() {
 
       {/* ── Fixed Background Videos ── */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <FadingVideo
+        <video
           src={HERO_VIDEO}
-          className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top opacity-30"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top opacity-100"
           style={{ width: '120%', height: '120%' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/80 to-black" />
       </div>
 
       {/* ── Cinematic Manifesto Sections ── */}
@@ -115,13 +112,8 @@ export default function LandingPage() {
         <Section01_Manifesto />
         <Section02_Reality />
         <Section03_Cost />
-        <Section04_WhyCTOsExist />
         <Section05_MeetCTO />
-        <Section06_Transformation />
-        <Section08_Philosophy />
         <Section09_RealityCards />
-        <Section10_Execution />
-        <Section11_FinalManifesto />
         <Section12_FinalCTA />
       </div>
     </div>

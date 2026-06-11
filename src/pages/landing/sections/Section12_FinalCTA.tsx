@@ -5,7 +5,7 @@ export default function Section12_FinalCTA() {
   const navigate = useNavigate()
 
   return (
-    <section className="relative w-full h-screen bg-black flex flex-col items-center justify-center text-center px-8 border-t border-white/5">
+    <section className="relative min-h-screen w-full bg-transparent flex flex-col items-center justify-center overflow-hidden px-8">
       <div className="max-w-5xl flex flex-col items-center">
         <h2 className="text-massive-2 text-white mb-6">LET'S BUILD</h2>
         <h2 className="text-massive-2 gradient-text-blue mb-12">SOMETHING REAL.</h2>

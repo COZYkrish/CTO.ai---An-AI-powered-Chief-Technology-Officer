@@ -52,7 +52,7 @@ export default function Section05_MeetCTO() {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen w-full bg-void flex flex-col items-center justify-center overflow-hidden px-8 py-32">
+    <section ref={containerRef} className="relative min-h-screen w-full bg-transparent flex flex-col items-center justify-center overflow-hidden px-8 py-32">
       
       {/* Abstract Background Grid */}
       <div className="absolute inset-0 z-0 dot-grid opacity-20 mask-radial-fade"></div>
