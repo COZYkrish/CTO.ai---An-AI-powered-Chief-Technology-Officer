@@ -18,6 +18,11 @@ import Section10_Execution from './sections/Section10_Execution'
 import Section11_FinalManifesto from './sections/Section11_FinalManifesto'
 import Section12_FinalCTA from './sections/Section12_FinalCTA'
 
+// Cinematic Elements
+import FilmGrain from '@/components/cinematic/FilmGrain'
+import AmbientDust from '@/components/cinematic/AmbientDust'
+import MagneticElement from '@/components/cinematic/MagneticElement'
+
 const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4'
 const DEEP_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4'
 
@@ -50,7 +55,8 @@ export default function LandingPage() {
 
   return (
     <div className="relative bg-black" style={{ background: '#000' }}>
-      {/* Cursor spotlight */}
+      <FilmGrain />
+      <AmbientDust />
       <CursorSpotlight />
 
       {/* ── Sticky Editorial Navbar ── */}
@@ -62,30 +68,35 @@ export default function LandingPage() {
       >
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="text-white font-bebas text-3xl tracking-widest cursor-pointer" onClick={() => scrollTo('top')}>
-            CTO.ai
-          </div>
+          <MagneticElement intensity={0.2}>
+            <div className="text-white font-bebas text-3xl tracking-widest cursor-pointer" onClick={() => scrollTo('top')}>
+              CTO.ai
+            </div>
+          </MagneticElement>
 
           {/* Center nav links */}
           <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
-              <span
-                key={link.id}
-                onClick={() => scrollTo(link.id)}
-                className="text-sm font-medium text-white/70 font-inter cursor-pointer hover:text-white uppercase tracking-widest transition-colors"
-              >
-                {link.label}
-              </span>
+              <MagneticElement key={link.id} intensity={0.3}>
+                <span
+                  onClick={() => scrollTo(link.id)}
+                  className="text-sm font-medium text-white/70 font-inter cursor-pointer hover:text-white uppercase tracking-widest transition-colors"
+                >
+                  {link.label}
+                </span>
+              </MagneticElement>
             ))}
           </div>
 
           {/* Right Action */}
-          <button
-            onClick={() => navigate(isAuthenticated ? '/command-center' : '/login')}
-            className="text-sm font-bold text-white font-inter cursor-pointer hover:text-blue-400 uppercase tracking-widest transition-colors"
-          >
-            Launch CTO.ai
-          </button>
+          <MagneticElement intensity={0.3}>
+            <button
+              onClick={() => navigate(isAuthenticated ? '/command-center' : '/login')}
+              className="text-sm font-bold text-white font-inter cursor-pointer hover:text-blue-400 uppercase tracking-widest transition-colors"
+            >
+              Launch CTO.ai
+            </button>
+          </MagneticElement>
         </div>
       </motion.nav>
 
