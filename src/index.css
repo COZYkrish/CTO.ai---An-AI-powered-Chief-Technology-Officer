@@ -82,36 +82,55 @@
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
   }
 
-  /* ─── Cinema Typography ──────────────────────────────────── */
-  .text-cinema {
-    font-family: 'Geist', sans-serif;
-    font-size: clamp(3rem, 8vw, 9rem);
-    font-weight: 800;
+  /* ─── Cinema Typography (VSK Inspired) ──────────────────────────────────── */
+  .font-bebas {
+    font-family: 'Bebas Neue', sans-serif;
+    text-transform: uppercase;
+  }
+  
+  .font-oswald {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .text-massive-1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 200px);
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .text-massive-2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 10vw, 160px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .text-massive-3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 120px);
     line-height: 0.95;
-    letter-spacing: -0.04em;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
 
-  .text-display {
-    font-family: 'Geist', sans-serif;
-    font-size: clamp(2rem, 5vw, 5rem);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-  }
-
-  .text-headline {
-    font-family: 'Geist', sans-serif;
-    font-size: clamp(1.5rem, 3vw, 3rem);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+  .text-manifesto {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 100px);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
   }
 
   .text-editorial {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: clamp(1.25rem, 2.5vw, 2.25rem);
     font-weight: 300;
-    line-height: 1.4;
+    line-height: 1.5;
     letter-spacing: -0.01em;
   }
 
