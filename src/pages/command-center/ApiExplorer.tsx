@@ -18,8 +18,8 @@ export default function ApiExplorer() {
   const [expanded, setExpanded] = useState<string | null>(null)
   const [activeTag, setActiveTag] = useState('All')
 
-  const allTags = ['All', ...Array.from(new Set(api.endpoints.flatMap((e) => e.tags)))]
-  const filtered = activeTag === 'All' ? api.endpoints : api.endpoints.filter((e) => e.tags.includes(activeTag))
+  const allTags = ['All', ...Array.from(new Set((api?.endpoints || []).flatMap((e) => e.tags || [])))]
+  const filtered = activeTag === 'All' ? (api?.endpoints || []) : (api?.endpoints || []).filter((e) => (e.tags || []).includes(activeTag))
 
   return (
     <div className="p-8 space-y-6">
@@ -27,9 +27,9 @@ export default function ApiExplorer() {
         <p className="text-xs font-mono text-indigo-400/60 uppercase tracking-widest mb-2">API Explorer</p>
         <h1 className="font-geist font-black text-white mb-1" style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', letterSpacing: '-0.03em' }}>API Specification</h1>
         <div className="flex items-center gap-4 mt-2">
-          <span className="font-mono text-white/30 text-xs">{api.baseUrl}</span>
-          <span className="px-2 py-0.5 rounded font-mono text-xs" style={{ background: 'rgba(59,130,246,0.1)', color: '#3B82F6' }}>v{api.version}</span>
-          <span className="px-2 py-0.5 rounded font-mono text-xs" style={{ background: 'rgba(139,92,246,0.1)', color: '#8B5CF6' }}>{api.authentication}</span>
+          <span className="font-mono text-white/30 text-xs">{api?.baseUrl || '/api'}</span>
+          <span className="px-2 py-0.5 rounded font-mono text-xs" style={{ background: 'rgba(59,130,246,0.1)', color: '#3B82F6' }}>v{api?.version || '1.0'}</span>
+          <span className="px-2 py-0.5 rounded font-mono text-xs" style={{ background: 'rgba(139,92,246,0.1)', color: '#8B5CF6' }}>{api?.authentication || 'None'}</span>
         </div>
       </motion.div>
 
@@ -68,7 +68,7 @@ export default function ApiExplorer() {
               <code className="font-mono text-white/70 text-sm flex-1 truncate">{ep.path}</code>
               {ep.auth ? <Lock className="w-3.5 h-3.5 text-yellow-400/60 flex-shrink-0" /> : <Unlock className="w-3.5 h-3.5 text-white/20 flex-shrink-0" />}
               <div className="flex gap-1 flex-shrink-0">
-                {ep.tags.map((t) => <span key={t} className="text-xs text-white/25 font-mono">{t}</span>)}
+                {(ep.tags || []).map((t) => <span key={t} className="text-xs text-white/25 font-mono">{t}</span>)}
               </div>
               {expanded === ep.id ? <ChevronDown className="w-4 h-4 text-white/30 flex-shrink-0" /> : <ChevronRight className="w-4 h-4 text-white/30 flex-shrink-0" />}
             </div>
@@ -86,7 +86,7 @@ export default function ApiExplorer() {
                 <div>
                   <p className="text-xs font-mono text-white/30 uppercase tracking-wider mb-2">Responses</p>
                   <div className="space-y-2">
-                    {ep.responses.map((r) => (
+                    {(ep.responses || []).map((r) => (
                       <div key={r.status} className="flex items-start gap-3 text-xs font-mono">
                         <span className="px-2 py-0.5 rounded" style={{
                           background: r.status < 300 ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)',

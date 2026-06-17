@@ -16,23 +16,23 @@ export default function DatabaseDesigner() {
     return <EmptyBlueprintState title="Database Designer" />
   }
   const db = blueprint.database
-  const [expanded, setExpanded] = useState<string>(db.tables[0]?.name ?? '')
+  const [expanded, setExpanded] = useState<string>(db?.tables?.[0]?.name ?? '')
 
   return (
     <div className="p-8 space-y-6">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <p className="text-xs font-mono text-purple-400/60 uppercase tracking-widest mb-2">Database Designer</p>
         <h1 className="font-geist font-black text-white mb-1" style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', letterSpacing: '-0.03em' }}>
-          {db.type}
+          {db?.type || 'Database'}
         </h1>
-        <p className="font-inter text-white/40 text-sm">{db.tables.length} tables · {db.relationships.length} relationships · {db.indexes.length} indexes</p>
+        <p className="font-inter text-white/40 text-sm">{db?.tables?.length || 0} tables · {db?.relationships?.length || 0} relationships · {db?.indexes?.length || 0} indexes</p>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Tables */}
         <div className="space-y-3">
           <h3 className="font-geist font-semibold text-white text-sm mb-4">Tables</h3>
-          {db.tables.map((table, i) => (
+          {(db?.tables || []).map((table, i) => (
             <motion.div
               key={table.name}
               className="glass-panel rounded-xl overflow-hidden cursor-pointer"
@@ -44,7 +44,7 @@ export default function DatabaseDesigner() {
               <div className="flex items-center gap-3 px-5 py-4">
                 <div className="w-2 h-2 rounded-full bg-purple-400/60" />
                 <span className="font-mono text-white/80 text-sm font-semibold">{table.name}</span>
-                <span className="text-white/30 text-xs font-mono ml-auto">{table.columns.length} cols</span>
+                <span className="text-white/30 text-xs font-mono ml-auto">{table?.columns?.length || 0} cols</span>
                 {expanded === table.name ? <ChevronDown className="w-4 h-4 text-white/30" /> : <ChevronRight className="w-4 h-4 text-white/30" />}
               </div>
               {expanded === table.name && (
@@ -58,7 +58,7 @@ export default function DatabaseDesigner() {
                       </tr>
                     </thead>
                     <tbody>
-                      {table.columns.map((col) => (
+                      {(table?.columns || []).map((col) => (
                         <tr key={col.name} className="border-b border-white/5 last:border-0 hover:bg-white/2">
                           <td className="px-5 py-2 text-white/70">{col.name}</td>
                           <td className="px-3 py-2">
@@ -89,7 +89,7 @@ export default function DatabaseDesigner() {
           <div>
             <h3 className="font-geist font-semibold text-white text-sm mb-4">Relationships</h3>
             <div className="space-y-2">
-              {db.relationships.map((rel, i) => (
+              {(db?.relationships || []).map((rel, i) => (
                 <motion.div key={i} className="glass-panel rounded-xl px-5 py-4 flex items-center gap-4 text-xs font-mono"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.08 }}>
                   <span className="text-white/60">{rel.from}</span>
@@ -106,14 +106,14 @@ export default function DatabaseDesigner() {
           <div>
             <h3 className="font-geist font-semibold text-white text-sm mb-4">Indexes</h3>
             <div className="space-y-2">
-              {db.indexes.map((idx, i) => (
+              {(db?.indexes || []).map((idx, i) => (
                 <motion.div key={i} className="glass-panel rounded-xl px-5 py-4"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.08 }}>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-mono text-white/60 text-xs">{idx.name}</span>
                     {idx.unique && <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: 'rgba(139,92,246,0.1)', color: '#8B5CF6' }}>UNIQUE</span>}
                   </div>
-                  <p className="text-white/30 text-xs font-mono">{idx.table} ({idx.columns.join(', ')})</p>
+                  <p className="text-white/30 text-xs font-mono">{idx.table} ({(idx?.columns || []).join(', ')})</p>
                 </motion.div>
               ))}
             </div>
