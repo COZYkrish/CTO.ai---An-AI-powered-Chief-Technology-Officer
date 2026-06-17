@@ -21,13 +21,14 @@ gsap.registerPlugin(ScrollTrigger)
 import FilmGrain from '@/components/cinematic/FilmGrain'
 import AmbientDust from '@/components/cinematic/AmbientDust'
 import MagneticElement from '@/components/cinematic/MagneticElement'
+import FadingVideo from '@/components/ui/FadingVideo'
 
 const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4'
 
 export default function LandingPage() {
   const setCursor = useCinematicStore((s) => s.setCursor)
   const navigate = useNavigate()
-  const { isAuthenticated } = useUIStore()
+  const isAuthenticated = useUIStore((s) => s.isAuthenticated)
 
   useEffect(() => {
     // Refresh ScrollTrigger once the page loads to ensure accurate pin spacing
@@ -107,13 +108,9 @@ export default function LandingPage() {
         </motion.nav>
 
         {/* ── Fixed Background Videos ── */}
-        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-          <video
+        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-black">
+          <FadingVideo
             src={HERO_VIDEO}
-            autoPlay
-            muted
-            loop
-            playsInline
             className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top opacity-100"
             style={{ width: '120%', height: '120%' }}
           />

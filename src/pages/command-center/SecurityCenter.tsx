@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
 import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
-import { Shield, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react'
+import { Shield, CheckCircle, TriangleAlert, XCircle } from 'lucide-react'
 
 const severityColor: Record<string, string> = { critical: '#ef4444', high: '#f59e0b', medium: '#3B82F6', low: '#6b7280' }
-const statusIcon = { pass: CheckCircle2, fail: XCircle, warning: AlertTriangle }
+const statusIcon = { pass: CheckCircle, fail: XCircle, warning: TriangleAlert }
 const statusColor = { pass: '#10B981', fail: '#ef4444', warning: '#f59e0b' }
 
 export default function SecurityCenter() {
@@ -62,7 +62,7 @@ export default function SecurityCenter() {
           </h3>
           <div className="space-y-4">
             {sec.threats.map((t, i) => (
-              <motion.div key={t.name} className="glass rounded-xl p-4"
+              <motion.div key={t.name || `threat-${i}`} className="glass rounded-xl p-4"
                 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.08 }}>
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: severityColor[t.severity] }} />
@@ -84,9 +84,9 @@ export default function SecurityCenter() {
         <h3 className="font-geist font-semibold text-white text-sm mb-5">OWASP Top 10 Checks</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {sec.owaspChecks.map((check, i) => {
-            const Icon = statusIcon[check.status]
+            const Icon = statusIcon[check.status] || XCircle
             return (
-              <motion.div key={check.id} className="glass rounded-xl p-4"
+              <motion.div key={check.id || `owasp-${i}`} className="glass rounded-xl p-4"
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 + i * 0.06 }}>
                 <div className="flex items-center gap-2 mb-2">
                   <Icon className="w-4 h-4 flex-shrink-0" style={{ color: statusColor[check.status] }} />

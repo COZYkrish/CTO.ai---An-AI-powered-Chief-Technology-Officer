@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useBlueprintStore } from '../../stores/blueprintStore'
 import { generateBlueprint } from '../../lib/gemini'
 import { GENERATION_STEPS } from '../../lib/mock/mockData'
-import { CheckCircle2, Loader2, ArrowRight, Sparkles } from 'lucide-react'
+import { CheckCircle, Loader2, ArrowRight, Sparkles } from 'lucide-react'
 import BlueprintExplosion from '../../components/cinematic/BlueprintExplosion'
 
 const wizardSteps = ['Idea', 'Details', 'Generate', 'Complete']
@@ -204,7 +204,7 @@ export default function InitializeSystem() {
                 {steps.map((s) => (
                   <div key={s.id} className="flex items-center gap-3">
                     {s.status === 'complete' ? (
-                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
                     ) : s.status === 'running' ? (
                       <Loader2 className="w-4 h-4 text-blue-400 animate-spin flex-shrink-0" />
                     ) : (
@@ -225,7 +225,7 @@ export default function InitializeSystem() {
           <motion.div key="step3" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-2xl">
             <div className="glass-panel rounded-2xl p-10 text-center">
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)' }}>
-                <CheckCircle2 className="w-8 h-8 text-green-400" />
+                <CheckCircle className="w-8 h-8 text-green-400" />
               </div>
               <h2 className="font-geist font-black text-white text-2xl mb-2" style={{ letterSpacing: '-0.03em' }}>Blueprint Complete</h2>
               <p className="font-inter text-white/40 text-sm mb-8">Your complete engineering blueprint has been generated. All 9 artifacts are ready.</p>

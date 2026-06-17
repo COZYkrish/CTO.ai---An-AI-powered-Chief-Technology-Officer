@@ -71,15 +71,27 @@ export default function FadingVideo({ src, className = '', style }: FadingVideoP
       }, 100)
     }
 
+    const onPause = () => {
+      if (video.currentTime < video.duration - 0.5) {
+        video.play().catch(() => {})
+      }
+    }
+
     video.addEventListener('loadeddata', onLoadedData)
     video.addEventListener('timeupdate', onTimeUpdate)
     video.addEventListener('ended', onEnded)
+    video.addEventListener('pause', onPause)
+
+    if (video.readyState >= 2) {
+      onLoadedData()
+    }
 
     return () => {
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
       video.removeEventListener('loadeddata', onLoadedData)
       video.removeEventListener('timeupdate', onTimeUpdate)
       video.removeEventListener('ended', onEnded)
+      video.removeEventListener('pause', onPause)
     }
   }, [fadeTo])
 

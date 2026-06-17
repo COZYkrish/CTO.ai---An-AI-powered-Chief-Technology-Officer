@@ -6,7 +6,7 @@ import { useBlueprintStore } from '../../stores/blueprintStore'
 import {
   LayoutDashboard, Plus, FolderOpen, FileText, GitBranch,
   Database, Globe, Shield, Server, DollarSign, Calendar,
-  Users, AlertTriangle, BookOpen, MessageSquare,
+  Users, TriangleAlert, BookOpen, MessageSquare,
   LogOut, ChevronLeft, ChevronRight, Cpu, Bell, Search
 } from 'lucide-react'
 import CommandPalette from './CommandPalette'
@@ -28,7 +28,7 @@ const navItems = [
   { id: 'sep4',          label: '',                          icon: null, path: '', separator: true },
   { id: 'sprints',       label: 'Sprint Planner',            icon: Calendar,       path: '/command-center/sprints' },
   { id: 'team',          label: 'Engineering Corps',         icon: Users,          path: '/command-center/team' },
-  { id: 'risks',         label: 'Risk Intelligence',         icon: AlertTriangle,  path: '/command-center/risks' },
+  { id: 'risks',         label: 'Risk Intelligence',         icon: TriangleAlert,  path: '/command-center/risks' },
   { id: 'sep5',          label: '',                          icon: null, path: '', separator: true },
   { id: 'docs',          label: 'Documentation Hub',         icon: BookOpen,       path: '/command-center/docs' },
   { id: 'chat',          label: 'CTO Intelligence',          icon: MessageSquare,  path: '/command-center/chat' },

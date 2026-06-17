@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
 import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
-import { Server, CheckCircle2 } from 'lucide-react'
+import { Server, CheckCircle } from 'lucide-react'
 
 export default function InfrastructurePlanner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
@@ -56,7 +56,7 @@ export default function InfrastructurePlanner() {
           <div className="space-y-2">
             {infra.monitoring.map((m, i) => (
               <div key={i} className="flex items-center gap-3 text-sm font-inter">
-                <CheckCircle2 className="w-4 h-4 text-green-400/60 flex-shrink-0" />
+                <CheckCircle className="w-4 h-4 text-green-400/60 flex-shrink-0" />
                 <span className="text-white/50">{m}</span>
               </div>
             ))}

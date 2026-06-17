@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
-import { AlertTriangle, AlertOctagon, Info } from 'lucide-react'
+import { TriangleAlert, OctagonAlert, Info } from 'lucide-react'
 
 import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
 import { useBlueprintStore } from '../../stores/blueprintStore'
 
 const severityConfig = {
-  critical: { color: '#ef4444', Icon: AlertOctagon, label: 'Critical' },
-  high: { color: '#f59e0b', Icon: AlertTriangle, label: 'High' },
+  critical: { color: '#ef4444', Icon: OctagonAlert, label: 'Critical' },
+  high: { color: '#f59e0b', Icon: TriangleAlert, label: 'High' },
   medium: { color: '#3B82F6', Icon: Info, label: 'Medium' },
   low: { color: '#6b7280', Icon: Info, label: 'Low' },
 }

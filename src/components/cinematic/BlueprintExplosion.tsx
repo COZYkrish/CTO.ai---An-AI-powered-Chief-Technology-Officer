@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle } from 'lucide-react'
 
 interface BlueprintExplosionProps {
   isVisible: boolean
@@ -117,7 +117,7 @@ export default function BlueprintExplosion({ isVisible, projectName, onComplete 
               animate={{ scale: 1, rotate: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <CheckCircle2 className="w-10 h-10 text-blue-400" />
+              <CheckCircle className="w-10 h-10 text-blue-400" />
             </motion.div>
 
             {/* Text below */}

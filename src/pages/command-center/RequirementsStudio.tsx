@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useBlueprintStore } from '../../stores/blueprintStore'
 import EmptyBlueprintState from '../../components/ui/EmptyBlueprintState'
-import { CheckCircle2, Circle, ChevronDown, ChevronRight } from 'lucide-react'
+import { CheckCircle, Circle, ChevronDown, ChevronRight } from 'lucide-react'
 
 const priorityColor: Record<string, string> = {
   critical: '#ef4444', high: '#f59e0b', medium: '#3B82F6', low: '#6b7280'
@@ -64,7 +64,7 @@ export default function RequirementsStudio() {
               transition={{ delay: i * 0.07 }}
             >
               <div className="flex items-start gap-4">
-                <CheckCircle2 className="w-5 h-5 text-blue-400/60 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-blue-400/60 flex-shrink-0 mt-0.5" />
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
                     <h3 className="font-geist font-semibold text-white text-sm">{r.title}</h3>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useUIStore } from '../../stores/uiStore'
-import { Search, LayoutDashboard, Cpu, Shield, DollarSign, GitBranch, FileText, Zap, Users, AlertTriangle, BookOpen, MessageSquare, Server } from 'lucide-react'
+import { Search, LayoutDashboard, Cpu, Shield, DollarSign, GitBranch, FileText, Zap, Users, TriangleAlert, BookOpen, MessageSquare, Server } from 'lucide-react'
 
 const commands = [
   { id: 'hub', label: 'Intelligence Hub', icon: LayoutDashboard, path: '/command-center', section: 'Navigate' },
@@ -16,7 +16,7 @@ const commands = [
   { id: 'cost', label: 'Cost Simulator', icon: DollarSign, path: '/command-center/costs', section: 'Navigate' },
   { id: 'sprint', label: 'Sprint Planner', icon: LayoutDashboard, path: '/command-center/sprints', section: 'Navigate' },
   { id: 'team', label: 'Engineering Corps', icon: Users, path: '/command-center/team', section: 'Navigate' },
-  { id: 'risk', label: 'Risk Intelligence', icon: AlertTriangle, path: '/command-center/risks', section: 'Navigate' },
+  { id: 'risk', label: 'Risk Intelligence', icon: TriangleAlert, path: '/command-center/risks', section: 'Navigate' },
   { id: 'docs', label: 'Documentation Hub', icon: BookOpen, path: '/command-center/docs', section: 'Navigate' },
   { id: 'chat', label: 'CTO Intelligence', icon: MessageSquare, path: '/command-center/chat', section: 'Navigate' },
   { id: 'new', label: 'New Blueprint', icon: Cpu, path: '/command-center/initialize', section: 'Actions' },
