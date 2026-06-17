@@ -11,7 +11,7 @@ const methodColors: Record<string, string> = {
 export default function ApiExplorer() {
   const project = useBlueprintStore((s) => s.getActiveProject())
   const blueprint = project?.blueprint
-  if (!blueprint) {
+  if (!blueprint || !blueprint.apis) {
     return <EmptyBlueprintState title="API Explorer" />
   }
   const api = blueprint.apis

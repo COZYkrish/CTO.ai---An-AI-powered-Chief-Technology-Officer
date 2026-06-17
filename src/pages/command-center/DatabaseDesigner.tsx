@@ -12,7 +12,7 @@ const columnTypeColor: Record<string, string> = {
 export default function DatabaseDesigner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
   const blueprint = project?.blueprint
-  if (!blueprint) {
+  if (!blueprint || !blueprint.database) {
     return <EmptyBlueprintState title="Database Designer" />
   }
   const db = blueprint.database
@@ -63,10 +63,10 @@ export default function DatabaseDesigner() {
                           <td className="px-5 py-2 text-white/70">{col.name}</td>
                           <td className="px-3 py-2">
                             <span className="px-2 py-0.5 rounded text-xs" style={{
-                              background: `${columnTypeColor[col.type.split('(')[0]] ?? '#3B82F6'}15`,
-                              color: columnTypeColor[col.type.split('(')[0]] ?? '#3B82F6',
+                              background: `${columnTypeColor[(col?.type || 'VARCHAR').split('(')[0]] ?? '#3B82F6'}15`,
+                              color: columnTypeColor[(col?.type || 'VARCHAR').split('(')[0]] ?? '#3B82F6',
                             }}>
-                              {col.type.split('(')[0]}
+                              {(col?.type || 'VARCHAR').split('(')[0]}
                             </span>
                           </td>
                           <td className="px-3 py-2 text-white/30">

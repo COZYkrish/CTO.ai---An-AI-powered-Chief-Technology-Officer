@@ -6,7 +6,7 @@ import { Server, CheckCircle } from 'lucide-react'
 export default function InfrastructurePlanner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
   const blueprint = project?.blueprint
-  if (!blueprint) {
+  if (!blueprint || !blueprint.infrastructure) {
     return <EmptyBlueprintState title="Infrastructure Planner" />
   }
   const infra = blueprint.infrastructure
@@ -20,30 +20,30 @@ export default function InfrastructurePlanner() {
         </h1>
         <div className="flex items-center gap-3 mt-2">
           <span className="px-3 py-1 rounded-lg font-mono text-xs uppercase" style={{ background: 'rgba(255,153,0,0.1)', border: '1px solid rgba(255,153,0,0.2)', color: '#ff9900' }}>
-            {infra?.provider?.toUpperCase() || 'UNKNOWN'}
+            {String(infra?.provider || 'UNKNOWN').toUpperCase()}
           </span>
-          <span className="font-inter text-white/40 text-sm">{infra?.deploymentStrategy}</span>
+          <span className="font-inter text-white/40 text-sm">{infra?.deploymentStrategy || 'Cloud Native'}</span>
         </div>
       </motion.div>
 
       {/* Services grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {(infra?.services || []).map((svc, i) => (
-          <motion.div key={svc.name} className="glass-panel rounded-2xl p-6"
+          <motion.div key={svc?.name || i} className="glass-panel rounded-2xl p-6"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(16,185,129,0.1)' }}>
                 <Server className="w-4 h-4 text-green-400" />
               </div>
               <div>
-                <div className="font-geist font-semibold text-white text-sm">{svc.name}</div>
-                <div className="text-white/30 text-xs font-mono">{svc.service}</div>
+                <div className="font-geist font-semibold text-white text-sm">{svc?.name || 'Service'}</div>
+                <div className="text-white/30 text-xs font-mono">{svc?.service || 'Cloud Run'}</div>
               </div>
             </div>
-            <p className="text-white/40 font-inter text-xs mb-3">{svc.purpose}</p>
+            <p className="text-white/40 font-inter text-xs mb-3">{svc?.purpose || 'Computes tasks.'}</p>
             <div className="flex items-center justify-between">
-              <span className="text-white/25 font-mono text-xs">{svc.tier}</span>
-              <span className="font-geist font-bold text-green-400">${svc.monthlyEstimate}<span className="text-white/25 font-normal text-xs">/mo</span></span>
+              <span className="text-white/25 font-mono text-xs">{svc?.tier || 'Free'}</span>
+              <span className="font-geist font-bold text-green-400">${svc?.monthlyEstimate || 0}<span className="text-white/25 font-normal text-xs">/mo</span></span>
             </div>
           </motion.div>
         ))}

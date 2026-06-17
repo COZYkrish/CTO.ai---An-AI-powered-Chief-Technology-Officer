@@ -8,7 +8,7 @@ const taskTypeColor: Record<string, string> = { feature: '#3B82F6', infra: '#10B
 export default function SprintPlanner() {
   const project = useBlueprintStore((s) => s.getActiveProject())
   const blueprint = project?.blueprint
-  if (!blueprint) {
+  if (!blueprint || !blueprint.roadmap) {
     return <EmptyBlueprintState title="Sprint Planner" />
   }
   const roadmap = blueprint.roadmap
